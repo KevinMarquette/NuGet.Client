@@ -321,6 +321,8 @@ namespace Dotnet.Integration.Test
         private static void KillDotnetExe(string pathToDotnetExe)
         {
             var processes = Process.GetProcessesByName("dotnet");
+            var testDirProcesses = Process.GetProcesses().Where(t => t.MainModule.FileName.StartsWith(TestFileSystemUtility.NuGetTestFolder));
+            
             if(processes != null && processes.Length >=1)
             {
                 try
@@ -331,6 +333,11 @@ namespace Dotnet.Integration.Test
                         {
                             process.Kill();
                         }
+                    }
+
+                    foreach (var process in testDirProcesses)
+                    {
+                        process.Kill();
                     }
                 }
                 catch { }
