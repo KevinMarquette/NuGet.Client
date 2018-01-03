@@ -75,7 +75,7 @@ namespace Dotnet.Integration.Test
 
         [PlatformTheory(Platform.Windows)]
         [InlineData(true)]
-        [InlineData(false)] // TODO NK - update test to create a new project with a specific tfm
+        [InlineData(false)]
         public void PackCommand_PackConsoleAppWithRID_NupkgValid(bool includeSymbols)
         {
             using (var testDirectory = TestDirectory.Create())
@@ -110,7 +110,7 @@ namespace Dotnet.Integration.Test
                     // Validate the assets.
                     var libItems = nupkgReader.GetLibItems().ToList();
                     Assert.Equal(1, libItems.Count);
-                    Assert.Equal(FrameworkConstants.CommonFrameworks.NetCoreApp20, libItems[0].TargetFramework);
+                    Assert.Equal(FrameworkConstants.CommonFrameworks.NetCoreApp21, libItems[0].TargetFramework);
                     if (includeSymbols)
                     {
                         Assert.Equal(new[]
@@ -326,7 +326,7 @@ namespace Dotnet.Integration.Test
             }
         }
 
-        [PlatformFact(Platform.Windows)] // TODO NK - Update test to create a project with a specific tfm
+        [PlatformFact(Platform.Windows)]
         public void PackCommand_PackProject_AddsProjectRefsAsPackageRefs()
         {
             // Arrange
@@ -382,7 +382,7 @@ namespace Dotnet.Integration.Test
                     Assert.Equal(1,
                         dependencyGroups.Count);
 
-                    Assert.Equal(FrameworkConstants.CommonFrameworks.NetCoreApp20,
+                    Assert.Equal(FrameworkConstants.CommonFrameworks.NetCoreApp21,
                         dependencyGroups[0].TargetFramework);
                     var packagesA = dependencyGroups[0].Packages.ToList();
                     Assert.Equal(2,
@@ -399,10 +399,10 @@ namespace Dotnet.Integration.Test
                     // Validate the assets.
                     var libItems = nupkgReader.GetLibItems().ToList();
                     Assert.Equal(1, libItems.Count);
-                    Assert.Equal(FrameworkConstants.CommonFrameworks.NetCoreApp20, libItems[0].TargetFramework);
+                    Assert.Equal(FrameworkConstants.CommonFrameworks.NetCoreApp21, libItems[0].TargetFramework);
                     Assert.Equal(
                         new[]
-                        {"lib/netcoreapp2.1/ClassLibrary1.dll", "lib/netcoreapp2.1/ClassLibrary1.runtimeconfig.json"}, // These values are CLI version dependent, needs changed
+                        {"lib/netcoreapp2.1/ClassLibrary1.dll", "lib/netcoreapp2.1/ClassLibrary1.runtimeconfig.json"},
                         libItems[0].Items);
                 }
             }
